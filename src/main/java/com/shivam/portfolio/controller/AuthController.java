@@ -13,7 +13,10 @@ import com.shivam.portfolio.security.JwtUtil;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+	    "http://localhost:4200",
+	    "https://shivamvportfolio.vercel.app"
+	})
 public class AuthController {
 	
 	@Value("${admin.email}")
