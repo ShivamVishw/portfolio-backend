@@ -30,11 +30,11 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 
                 .requestMatchers(
-                		"/api/auth/**",
-                	    "/api/contact"
-//                        "/api/auth/**",
-//                        "/api/contact",
-//                        "/api/contact/**"
+//                		"/api/auth/**",
+//                	    "/api/contact"
+                        "/api/auth/**",
+                        "/api/contact",
+                        "/api/contact/**"
                 ).permitAll()
 
                 .anyRequest().authenticated()
