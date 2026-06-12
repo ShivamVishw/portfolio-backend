@@ -19,7 +19,10 @@ public class CorsConfig {
                 new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:4200"));
+                List.of(
+                        "http://localhost:4200",
+                        "https://shivamvportfolio.vercel.app"
+                ));
 
         configuration.setAllowedMethods(
                 List.of("GET","POST","PUT","DELETE","OPTIONS"));

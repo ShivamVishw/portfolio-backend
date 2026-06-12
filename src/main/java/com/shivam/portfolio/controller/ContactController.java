@@ -20,7 +20,10 @@ import com.shivam.portfolio.service.ContactService;
 
 @RestController
 @RequestMapping("/api/contact")
-@CrossOrigin(origins= "http://localhost:4200")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "https://shivamvportfolio.vercel.app"
+})
 public class ContactController {
 	
 	@Autowired
