@@ -1,13 +1,13 @@
 package com.shivam.portfolio.controller;
 
-import java.util.Optional;
 
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.shivam.portfolio.dto.LoginRequest;
 import com.shivam.portfolio.dto.LoginResponse;
-import com.shivam.portfolio.entity.Admin;
 import com.shivam.portfolio.repository.AdminRepository;
 import com.shivam.portfolio.security.JwtUtil;
 
@@ -16,16 +16,19 @@ import com.shivam.portfolio.security.JwtUtil;
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 	
+	@Value("${admin.email}")
+	private String adminEmail;
 
-    private final AdminRepository adminRepository;
+	@Value("${admin.password}")
+	private String adminPassword;
+	
     
     private final JwtUtil jwtUtil;
     
     public AuthController(
-            AdminRepository adminRepository,
             JwtUtil jwtUtil) {
 
-        this.adminRepository = adminRepository;
+ 
         this.jwtUtil = jwtUtil;
     }
 
@@ -33,27 +36,39 @@ public class AuthController {
     public ResponseEntity<?> login(
             @RequestBody LoginRequest request) {
 
-        Optional<Admin> admin =
-                adminRepository.findByEmail(request.getEmail());
+//        Optional<Admin> admin =
+//                adminRepository.findByEmail(request.getEmail());
+//
+//        if (admin.isEmpty()) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body("Invalid Email");
+//        }
+//
+//        if (!admin.get().getPassword()
+//                .equals(request.getPassword())) {
+//
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body("Invalid Password");
+//        }
+    	
+    	if (!request.getEmail().equals(adminEmail)) {
 
-        if (admin.isEmpty()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Invalid Email");
-        }
+    	    return ResponseEntity
+    	            .badRequest()
+    	            .body("Invalid Email");
+    	}
 
-        if (!admin.get().getPassword()
-                .equals(request.getPassword())) {
+    	if (!request.getPassword().equals(adminPassword)) {
 
-            return ResponseEntity
-                    .badRequest()
-                    .body("Invalid Password");
-        }
+    	    return ResponseEntity
+    	            .badRequest()
+    	            .body("Invalid Password");
+    	}
 
-        String token =
-                jwtUtil.generateToken(
-                        admin.get().getEmail()
-                );
+    	String token =
+    	        jwtUtil.generateToken(adminEmail);
 
         return ResponseEntity.ok(
                 new LoginResponse(token)
